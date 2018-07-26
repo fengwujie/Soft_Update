@@ -59,9 +59,24 @@ namespace Soft_Update
                     }
                     catch (Exception ex)
                     { }
-                    this.Close();
+                    //this.Close();
+
+                    Timer timer2 = new Timer();
+                    timer2.Interval = 1000;
+                    timer2.Tick += timer2_Tick;
+                    timer2.Enabled = true;
+                    timer2.Start();
+
                 }
             }
+        }
+        int i = 10;
+        void timer2_Tick(object sender, EventArgs e)
+        {
+            this.btnClose.Text = string.Format("关闭({0}秒)",i);
+            Application.DoEvents();
+            i--;
+            if (i <= 0) this.Close();
         }
 
         UpdateXmlDataContract ReadLocalInformation()
@@ -316,6 +331,11 @@ namespace Soft_Update
             }
             catch (Exception ex)
             { }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
